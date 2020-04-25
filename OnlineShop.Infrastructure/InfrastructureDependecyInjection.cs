@@ -3,13 +3,15 @@ using OnlineShop.Domain.Entities;
 using OnlineShop.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using OnlineShop.Application.Interfaces;
+using OnlineShop.Infrastructure.Utility;
+using Microsoft.Extensions.Configuration;
 
 namespace OnlineShop.Infrastructure
 {
     public static class InfrastructureDependecyInjection
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, 
-            string connectionString)
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services,
+            IConfiguration configuration)
         {
             services.AddIdentity<User,Role>(options =>
             {
@@ -23,15 +25,27 @@ namespace OnlineShop.Infrastructure
             //services.AddIdentityCore<User>()
             //    .AddRoles<Role>().AddEntityFrameworkStores<ShopDbContext>();
 
+            var dataSettings = DataSettings.GetDataSettings();
+            
             services.AddDbContext<ShopDbContext>(options =>
             {
-                options.UseSqlServer(connectionString);
+                switch (dataSettings.Active)
+                {
+                    case "MySQL":
+                        options.UseMySql(configuration.GetConnectionString("MySQL"));
+                        break;
+                    case "PostgreSQL":
+                        options.UseNpgsql(configuration.GetConnectionString("PostgreSQL"));
+                        break;
+                    default:
+                        //options.UseSqlServer(connectionString);
+                        options.UseSqlServer(configuration.GetConnectionString("OnlineShop"));
+                        break;
+                }
+
             });
 
-            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            //services.AddScoped<ICurrentUserService, CurrentUserService>();
             services.AddScoped<IShopDbContext>(provider => provider.GetRequiredService<ShopDbContext>());
-
             services.AddAuthentication();
 
             return services;

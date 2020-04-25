@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Application.Commands.Product;
-using OnlineShop.Application.Interfaces;
-using OnlineShop.Application.Pagination;
 using OnlineShop.Application.Queries.Product;
 using OnlineShop.Application.Response;
 using OnlineShop.Application.Utility;
-using OnlineShop.Application.ViewModels;
 
 namespace OnlineShop.Web.Controllers
 {
@@ -23,24 +17,7 @@ namespace OnlineShop.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllProducts([FromQuery] GetAllProductsQuery query)
         {
-            //var result = await _mediatr.Send(new GetAllProductsQuery());
             var result = await _mediatr.Send(query);
-
-            //if(result is Pagination<ProductVM>)
-            //{
-            //    //var pagination = result as Pagination<ProductVM>;
-
-            //    //var response = new
-            //    //{
-            //    //    pagination.TotalPages,
-            //    //    pagination.PageIndex,
-            //    //    pagination.HasNextPage,
-            //    //    pagination.HasPreviousPage,
-            //    //    data = result
-            //    //};
-
-            //    return Ok(result);
-            //}
 
             return Ok(result);
         }
@@ -65,10 +42,6 @@ namespace OnlineShop.Web.Controllers
                 return NotFound();
 
             return Ok(result);
-
-            //var result = await _mediatr.Send(new GetProductByIdQuery(id));
-
-            //return result == null ? (IActionResult)NotFound() : Ok(result);
         }
 
 

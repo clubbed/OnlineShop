@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
@@ -14,8 +13,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using OnlineShop.Application.Options;
 using System.Text;
-using MediatR;
-using OnlineShop.Application.Behaviors;
 
 namespace OnlineShop
 {
@@ -31,7 +28,6 @@ namespace OnlineShop
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             var jwtSettings = new JwtSettings();
             Configuration.Bind("JwtSettings", jwtSettings);
 
@@ -42,10 +38,9 @@ namespace OnlineShop
             services.AddScoped<ICurrentUserService, CurrentUserService>();
             services.AddTransient<IUploadImageService, UploadImageService>();
 
-            //services.AddMediatR(typeof(Startup));
-            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             services.AddApplication();
-            services.AddInfrastructure(Configuration.GetConnectionString("OnlineShop"));
+            //services.AddInfrastructure(Configuration.GetConnectionString("OnlineShop"));
+            services.AddInfrastructure(Configuration);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddAuthentication(c =>

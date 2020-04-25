@@ -7,13 +7,13 @@ using System.Data.SqlClient;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnlineShop.Application.Utility
+namespace OnlineShop.Infrastructure.Data
 {
-    public class SqlServerManager : ISqlManager
+    public class SQLServerManager : ISqlManager
     {
         private readonly string _connectionString;
 
-        public SqlServerManager(IConfiguration configuration)
+        public SQLServerManager(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("OnlineShop");
         }
@@ -22,7 +22,7 @@ namespace OnlineShop.Application.Utility
         //    _connectionString = connectionString;
         //}
 
-        public async Task<DataTable> GetDataTableAsync(string commandText, 
+        public async Task<DataTable> GetDataTableAsync(string commandText,
             CommandType commandType, List<SqlParameter> parameters = null)
         {
             var dt = new DataTable();
@@ -97,7 +97,7 @@ namespace OnlineShop.Application.Utility
                         }
                     }
 
-                    return await cmd.ExecuteNonQueryAsync(); 
+                    return await cmd.ExecuteNonQueryAsync();
                 }
             }
         }
