@@ -5,6 +5,7 @@ using OnlineShop.Application.Behaviors;
 using OnlineShop.Application.Caching;
 using OnlineShop.Application.Repositories.Interfaces;
 using OnlineShop.Application.Repositories.MeasureUnit;
+using OnlineShop.Application.Repositories.Order;
 using StackExchange.Redis;
 using System;
 using System.Reflection;
@@ -25,6 +26,7 @@ namespace OnlineShop.Application
             services.AddSingleton<ICacheService, RedisCacheService>();
 
             services.AddScoped<IMeasureUnitRepository, MeasureUnitRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
             return services;
         }

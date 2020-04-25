@@ -12,6 +12,7 @@ namespace OnlineShop.Application.Utility
         public const string GetAllVendors = "GetAllVendors";
         public const string GetAllMeasureUnits = "GetAllMeasureUnits";
         public const string GetAllShippers = "GetAllShippers";
-
+        public const string GetAllOrders = "GetAllOrders";
+        public const string GetAllOrdersByUser = "GetAllOrdersByUser-{0}";
     }
 }
