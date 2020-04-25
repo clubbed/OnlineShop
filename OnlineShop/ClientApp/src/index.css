@@ -1,0 +1,39 @@
+/* @media (max-width: 767px) {
+    body {
+        padding-top: 50px;
+    }
+} */
+
+/* header {
+  background-color: aquamarine;
+}
+
+.logo {
+  color: #000;
+  font-size: 40;
+}
+nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px 40px;
+}
+
+.nav-menu {
+  margin-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  color: #000;
+  list-style: none;
+}
+
+.nav-menu li {
+  display: inline-block;
+  font-size: 16px;
+  text-transform: uppercase;
+  padding-left: 10px;
+}
+
+.nav-menu li a {
+  text-decoration: none;
+  color: #000;
+} */
