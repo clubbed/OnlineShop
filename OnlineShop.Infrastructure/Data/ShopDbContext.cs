@@ -16,13 +16,13 @@ namespace OnlineShop.Infrastructure.Data
         : IdentityDbContext<User, Role, int, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>,
         IShopDbContext
     {
-        //private readonly ICurrentUserService _currentUser;
+        private readonly ICurrentUserService _currentUser;
 
-        public ShopDbContext(DbContextOptions<ShopDbContext> options)
-            //ICurrentUserService currentUser)
+        public ShopDbContext(DbContextOptions<ShopDbContext> options,
+            ICurrentUserService currentUser)
             : base(options)
         {
-            //_currentUser = currentUser;
+            _currentUser = currentUser;
         }
 
         public DbSet<Product> Products { get; set; }
@@ -66,12 +66,12 @@ namespace OnlineShop.Infrastructure.Data
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        //entry.Entity.CreatedBy = _currentUser.Id;
+                        entry.Entity.CreatedBy = _currentUser.Id;
                         entry.Entity.CreatedBy = 0;
                         entry.Entity.Created = DateTime.Now;
                         break;
                     case EntityState.Modified:
-                        //entry.Entity.ModifiedBy = _currentUser.Id;
+                        entry.Entity.ModifiedBy = _currentUser.Id;
                         entry.Entity.ModifiedBy = 0;
                         entry.Entity.LastModified = DateTime.Now;
                         break;
