@@ -10,15 +10,14 @@ const GuestRoute = ({
 }) => (
   <Route
     {...rest}
-    render={(props) =>
-      !isAuthenticated ? (
-        <Layout>
-          <Component {...props} />
-        </Layout>
-      ) : (
-        <Redirect to={{ pathname: "/" }} />
-      )
-    }
+    render={(props) => (
+      // !isAuthenticated ?
+      <Layout>
+        <Component {...props} />
+      </Layout>
+      // ) : (
+      // <Redirect to={{ pathname: "/" }} />
+    )}
   />
 );
 

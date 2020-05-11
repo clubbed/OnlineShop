@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 
 namespace OnlineShop.Application.Handlers.Product
 {
-    //public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, ProductVM>
     public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, IResponse>
     {
         private readonly IShopDbContext _dbContext;
@@ -21,7 +20,6 @@ namespace OnlineShop.Application.Handlers.Product
         {
             _dbContext = dbContext;
         }
-        //public async Task<ProductVM> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
         public async Task<IResponse> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
         {
             var product = await _dbContext.Products
@@ -32,17 +30,16 @@ namespace OnlineShop.Application.Handlers.Product
 
             if(product == null)
             {
-                //return null;
                 return new NotFoundResponse("There is no product with this id");
             }
 
             var productVm = new ProductVM
             {
+                Id = product.Id,
                 Name = product.Name,
                 Price = product.Price,
                 Qty = product.Qty,
                 MeasureUnit = product.MeasureUnit.Name,
-                //Shipper = $"{product.Shipper.FirstName} {product.Shipper.LastName}",
                 Vendor = $"{product.Vendor.FirstName} {product.Vendor.LastName}",
                 IsFeatured = product.IsFeatured,
                 ImagePath = product.ImagePath,
@@ -51,7 +48,6 @@ namespace OnlineShop.Application.Handlers.Product
             };
 
             return new OkResponse<ProductVM>(productVm);
-            //return productVm;
         }
     }
 }

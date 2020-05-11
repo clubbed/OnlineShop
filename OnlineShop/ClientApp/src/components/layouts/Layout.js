@@ -6,10 +6,12 @@ const Layout = ({ children }) => {
   return (
     <React.Fragment>
       <NavMenu />
-      <div className="col-md-3">
-        <CategoryList />
+      <div className="container" style={{ paddingTop: "40px" }}>
+        <div className="col-md-3">
+          <CategoryList />
+        </div>
+        <div className="col-md-9">{children}</div>
       </div>
-      <div className="col-md-9">{children}</div>
     </React.Fragment>
   );
 };

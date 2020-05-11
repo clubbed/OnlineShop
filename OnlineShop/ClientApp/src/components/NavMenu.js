@@ -25,6 +25,16 @@ function NavMenu({ roles, isAuthenticated, logOut }) {
           Home <span className="sr-only">(current)</span>
         </Link>
       </li>
+      <li>
+        <Link to="/cart" className="nav-link">
+          Cart
+        </Link>
+      </li>
+      <li>
+        <Link to="/orders" className="nav-link">
+          My Orders
+        </Link>
+      </li>
       {roles !== undefined && roles.includes("Admin") && (
         <li className="nav-item">
           <Link to="/admin  " className="nav-link">

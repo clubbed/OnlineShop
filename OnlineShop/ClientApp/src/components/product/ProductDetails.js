@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import BackButton from "../common/BackButton";
 import Spinner from "../common/Spinner";
 import { getProductById } from "../../services/productService";
+import { connect } from "react-redux";
+import { addToCart } from "../../store/Cart";
 
 const ProductDetails = (props) => {
   const [product, setProduct] = useState({});
@@ -11,11 +13,14 @@ const ProductDetails = (props) => {
     const id = props.match.params.id;
 
     getProductById(id).then((product) => {
-      console.log("product", product);
       setProduct(product);
       setLoading(false);
     });
   }, []);
+
+  const addToCart = () => {
+    props.addToCart(product);
+  };
 
   const productDetail = (
     <React.Fragment>
@@ -24,15 +29,20 @@ const ProductDetails = (props) => {
       <div className="alert alert-warning">
         Measure Unit - {product.measureUnit}, Price - {product.price}
       </div>
+      <div>
+        <button className="btn btn-primary" onClick={addToCart}>
+          Add to Cart
+        </button>
+      </div>
     </React.Fragment>
   );
 
   return (
-    <div className="col-md-8 col-md-offset-2">
+    <div>
       <BackButton goBack={() => props.history.goBack()} />
       {loading ? <Spinner /> : productDetail}
     </div>
   );
 };
 
-export default ProductDetails;
+export default connect(null, { addToCart })(ProductDetails);

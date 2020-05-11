@@ -11,7 +11,7 @@ namespace OnlineShop.Web.Services
         public CurrentUserService(IHttpContextAccessor contextAccessor)
         {
             Id = int.Parse(contextAccessor.HttpContext
-                .User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
+                .User?.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "0");
         }
     }
 }

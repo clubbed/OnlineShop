@@ -28,7 +28,11 @@ const Home = (props) => {
       .getAllProducts(page, size)
       .then((response) => {
         console.log("repsonse all", response);
-        setState({ ...state, products: response.data, loading: false });
+        setState({
+          ...state,
+          products: state.products.concat(response.data),
+          loading: false,
+        });
         setTotalPages(response.totalPages);
         setHasNext(response.hasNextPage);
         setHasPrevious(response.hasPreviousPage);
