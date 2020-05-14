@@ -36,6 +36,7 @@ namespace OnlineShop.Application.Handlers.Product
                 VendorId = request.Vendor,
                 Qty = request.Qty,
                 ImagePath = imagePath,
+                CategoryId = request.Category,
                 Active = true
             };
 

@@ -3,10 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using OnlineShop.Application.Interfaces;
 using OnlineShop.Application.Queries.Vendor;
 using OnlineShop.Application.ViewModels;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -27,6 +25,7 @@ namespace OnlineShop.Application.Handlers.Vendor
                 .Include(c => c.Tax)
                 .Select(c => new VendorVM
                 {
+                    Id = c.Id,
                     FirstName = c.FirstName,
                     LastName = c.LastName,
                     City = c.City,

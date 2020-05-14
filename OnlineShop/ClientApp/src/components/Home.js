@@ -4,7 +4,7 @@ import * as productService from "../services/productService";
 import ProductCard from "./product/ProductCard";
 import { Link } from "react-router-dom";
 import Spinner from "./common/Spinner";
-import CategoryList from "./CategoryList";
+import CategoryList from "././category/CategoryList";
 import Pagination from "./common/Pagination";
 
 const Home = (props) => {

@@ -2,24 +2,27 @@
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logOut } from "../store/Auth";
+import { Navbar, Nav } from "react-bootstrap";
 
 function NavMenu({ roles, isAuthenticated, logOut }) {
   const guestLinks = (
-    <ul className="nav-menu">
-      <li>
-        <Link to="/">Home</Link>
+    <ul className="navbar-nav mr-auto">
+      <li className="nav-item">
+        <Link to="/" className="nav-link">
+          Home
+        </Link>
       </li>
-      <li>
+      <li className="nav-item">
         <Link to="/login">Login</Link>
       </li>
-      <li>
+      <li className="nav-item">
         <Link to="/register">Register</Link>
       </li>
     </ul>
   );
 
   const userLinks = (
-    <ul className="navbar-nav">
+    <ul className="navbar-nav mr-auto">
       <li className="nav-item active">
         <Link to="/" className="nav-link">
           Home <span className="sr-only">(current)</span>
@@ -37,7 +40,7 @@ function NavMenu({ roles, isAuthenticated, logOut }) {
       </li>
       {roles !== undefined && roles.includes("Admin") && (
         <li className="nav-item">
-          <Link to="/admin  " className="nav-link">
+          <Link to="/admin" className="nav-link">
             Admin
           </Link>
         </li>
@@ -51,12 +54,15 @@ function NavMenu({ roles, isAuthenticated, logOut }) {
   );
 
   return (
-    <header>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <h2 className="logo">Online Shop</h2>
-        {isAuthenticated ? userLinks : guestLinks}
-      </nav>
-    </header>
+    <React.Fragment>
+      <Navbar bg="light" expand="lg">
+        <Navbar.Brand href="#home">Online Shop</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          {isAuthenticated ? userLinks : guestLinks}
+        </Navbar.Collapse>
+      </Navbar>
+    </React.Fragment>
   );
 }
 

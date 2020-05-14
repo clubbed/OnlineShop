@@ -37,6 +37,7 @@ namespace OnlineShop.Application.Repositories.MeasureUnit
             {
                 var result =  await _dbContext.MeasureUnits.Select(c => new MeasureUnitVM
                 {
+                    Id = c.Id,
                     Name = c.Name
                 }).ToListAsync();
 

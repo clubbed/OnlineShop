@@ -11,6 +11,7 @@ namespace OnlineShop.Application.Commands.Product
         public decimal Qty { get; set; }
         public int MeasureUnit { get; set; }
         public int Vendor { get; set; }
+        public int Category { get; set; }
         public IFormFile Image { get; set; }
     }
 }

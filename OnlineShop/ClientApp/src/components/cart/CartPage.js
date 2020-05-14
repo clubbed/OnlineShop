@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { removeFromCart } from "../store/Cart";
+import { removeFromCart } from "../../store/Cart";
 import { Link } from "react-router-dom";
 
 const CartPage = ({ items, total, removeFromCart }) => {

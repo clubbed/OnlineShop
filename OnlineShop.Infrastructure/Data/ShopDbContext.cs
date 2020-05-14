@@ -28,7 +28,7 @@ namespace OnlineShop.Infrastructure.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Tax> Taxes { get; set; }
         public DbSet<MeasureUnit> MeasureUnits { get; set; }
-        public DbSet<Customer> Customers { get; set; }
+        //public DbSet<Customer> AspNetUsers { get; set; }
         public DbSet<Vendor> Vendors { get; set; }
         public DbSet<Shipper> Shippers { get; set; }
         public DbSet<ShippingType> ShippingTypes { get; set; }
@@ -42,7 +42,6 @@ namespace OnlineShop.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.ApplyConfiguration(new CustomerConfiguration());
             builder.ApplyConfiguration(new DeliveryAddressConfiguration());
             builder.ApplyConfiguration(new EmployeeConfiguration());
             builder.ApplyConfiguration(new MeasureUnitConfiguration());
@@ -51,10 +50,11 @@ namespace OnlineShop.Infrastructure.Data
             builder.ApplyConfiguration(new ProductConfiguration());
             builder.ApplyConfiguration(new ShipperConfiguration());
             builder.ApplyConfiguration(new ShippingTypeConfiguration());
-            //builder.ApplyConfiguration(new StockConfiguration());
             builder.ApplyConfiguration(new TaxConfiguration());
             builder.ApplyConfiguration(new VendorConfiguration());
             builder.ApplyConfiguration(new CategoryConfiguration());
+            builder.ApplyConfiguration(new UserConfiguration());
+            builder.ApplyConfiguration(new RoleConfiguration());
 
             base.OnModelCreating(builder);
         }
@@ -67,12 +67,10 @@ namespace OnlineShop.Infrastructure.Data
                 {
                     case EntityState.Added:
                         entry.Entity.CreatedBy = _currentUser.Id;
-                        entry.Entity.CreatedBy = 0;
                         entry.Entity.Created = DateTime.Now;
                         break;
                     case EntityState.Modified:
                         entry.Entity.ModifiedBy = _currentUser.Id;
-                        entry.Entity.ModifiedBy = 0;
                         entry.Entity.LastModified = DateTime.Now;
                         break;
                     default:

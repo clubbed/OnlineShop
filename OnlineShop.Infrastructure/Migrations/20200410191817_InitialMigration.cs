@@ -208,25 +208,6 @@ namespace OnlineShop.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Customers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Customers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Customers_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Employees",
                 columns: table => new
                 {
@@ -305,15 +286,15 @@ namespace OnlineShop.Infrastructure.Migrations
                     City = table.Column<string>(nullable: false),
                     State = table.Column<string>(nullable: false),
                     Active = table.Column<bool>(nullable: false),
-                    CustomerId = table.Column<int>(nullable: false)
+                    UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DeliveryAddresses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DeliveryAddresses_Customers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Customers",
+                        name: "FK_DeliveryAddresses_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -328,7 +309,7 @@ namespace OnlineShop.Infrastructure.Migrations
                     LastModified = table.Column<DateTime>(nullable: true),
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CustomerId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
                     Total = table.Column<decimal>(type: "money", nullable: false),
                     InvoiceDate = table.Column<DateTime>(nullable: false)
                 },
@@ -336,9 +317,9 @@ namespace OnlineShop.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Orders_Customers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Customers",
+                        name: "FK_Orders_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -443,6 +424,24 @@ namespace OnlineShop.Infrastructure.Migrations
                     { 3, "Vat18", 18.0000m }
                 });
 
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "Name", "NormalizedName", "ConcurrencyStamp" },
+                values: new object[,]
+                {
+                    { 1, "Admin", "ADMIN", Guid.NewGuid().ToString() },
+                    { 2, "Customer", "CUSTOMER",Guid.NewGuid().ToString() }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Vendors",
+                columns: new[] { "Id", "CreatedBy", "Created", "Address", "City", "State", "FirstName", "LastName", "TaxId" },
+                values: new object[,]
+                {
+                    { 1, 0, DateTime.Now, "Address 1","City 1","State 1","FirstName 1","LastName 1", 3 },
+                    { 2, 0, DateTime.Now, "Address 2","City 2","State 2","FirstName 2","LastName 2", 3 }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -483,14 +482,9 @@ namespace OnlineShop.Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Customers_UserId",
-                table: "Customers",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DeliveryAddresses_CustomerId",
+                name: "IX_DeliveryAddresses_UserId",
                 table: "DeliveryAddresses",
-                column: "CustomerId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_UserId",
@@ -513,9 +507,9 @@ namespace OnlineShop.Infrastructure.Migrations
                 column: "TaxId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_CustomerId",
+                name: "IX_Orders_UserId",
                 table: "Orders",
-                column: "CustomerId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_MeasureUnitId",
@@ -578,9 +572,6 @@ namespace OnlineShop.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Shippers");
-
-            migrationBuilder.DropTable(
-                name: "Customers");
 
             migrationBuilder.DropTable(
                 name: "MeasureUnits");

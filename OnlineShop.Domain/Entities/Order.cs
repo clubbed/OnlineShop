@@ -12,11 +12,11 @@ namespace OnlineShop.Domain.Entities
         }
 
         public int Id { get; set; }
-        public int CustomerId { get; set; }
+        public int UserId { get; set; }
         public decimal Total { get; set; }
         public DateTime InvoiceDate { get; set; }
 
-        public Customer Customer { get; set; }
+        public User User { get; set; }
         public ICollection<OrderDetails> OrderDetails { get; set; }
     }
 }

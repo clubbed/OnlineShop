@@ -20,6 +20,17 @@ namespace OnlineShop.Infrastructure.Configuration
             builder.Property(c => c.State).IsRequired();
             builder.Property(c => c.Discount).HasColumnType("numeric(18,5)");
             builder.HasOne(c => c.Tax);
+
+            builder.HasData(new[]
+            {
+                new Vendor{ Id = 1, CreatedBy = 0, Created = DateTime.Now, 
+                    Address = "Str. 14", City = "London", FirstName = "Jamie", 
+                    LastName = "Mccarthy", State = "UK", TaxId = 3},
+                                
+                new Vendor{ Id = 2, CreatedBy = 0, Created = DateTime.Now,
+                    Address = "Str. 61", City = "Burnley", FirstName="Joey",
+                    LastName = "Smith", State = "UK", TaxId = 2},
+            });
         }
     }
 }

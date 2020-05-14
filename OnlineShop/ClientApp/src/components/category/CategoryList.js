@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getAllCategories } from "../store/Category";
+import { getAllCategories } from "../../store/Category";
 
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";

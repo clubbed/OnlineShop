@@ -19,6 +19,14 @@ namespace OnlineShop.Infrastructure.Configuration
                 .HasForeignKey(c => c.CategoryId)
                 .OnDelete(DeleteBehavior.SetNull);
 
+            builder.HasData(new[]
+            {
+                new Category{ Id = 1, Name = "Technology"},
+                new Category{ Id = 2, Name = "Fashion"},
+                new Category{ Id = 3, Name = "Kids"},
+                new Category{ Id = 4, Name = "Food"},
+            });
+
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Application.Commands.MeasureUnit;
@@ -10,8 +9,6 @@ namespace OnlineShop.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize(Roles = Roles.Admin)]
-    [Authorize]
     public class MeasureUnitController : BaseController
     {
         [HttpGet]
@@ -20,13 +17,15 @@ namespace OnlineShop.Web.Controllers
             return Ok(await _mediatr.Send(new GetMeasureUnitsQuery()));
         }
 
-        [HttpPost("Create")]
+        [HttpPost]
+        [Authorize(Roles = RolesDefaults.Admin)]
         public async Task<IActionResult> CreateMeasureUnit([FromBody]CreateMeasureUnitCommand command)
         {
             return Ok(await _mediatr.Send(command));
         }
 
-        [HttpPut("Update/{id:int}")]
+        [HttpPut("{id}")]
+        [Authorize(Roles = RolesDefaults.Admin)]
         public async Task<IActionResult> UpdateMeasureUnit(int id, [FromBody]UpdateMeasureUnitCommand command)
         {
             command.Id = id;
@@ -36,7 +35,8 @@ namespace OnlineShop.Web.Controllers
             return result == true ? (IActionResult)Ok() : NotFound();
         }
 
-        [HttpDelete("Delete/{id:int}")]
+        [HttpDelete("{id}")]
+        [Authorize(Roles = RolesDefaults.Admin)]
         public async Task<IActionResult> DeleteMeasureUnit(int id)
         {
             var result = await _mediatr.Send(new DeleteMeasureUnitCommand(id));

@@ -16,9 +16,9 @@ namespace OnlineShop.Infrastructure.Configuration
             builder.Property(c => c.City).IsRequired();
             builder.Property(c => c.State).IsRequired();
 
-            builder.HasOne(d => d.Customer)
+            builder.HasOne(d => d.User)
                 .WithMany(c => c.DeliveryAddresses)
-                .HasForeignKey(d => d.CustomerId)
+                .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
         }
     }

@@ -1,6 +1,6 @@
 ﻿namespace OnlineShop.Application.Utility
 {
-    public static class RolesDeafults
+    public static class RolesDefaults
     {
         public const string Admin = "Admin";
         public const string Manager = "Manager";

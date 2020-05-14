@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import BackButton from "./common/BackButton";
-import * as productService from "../services/productService";
+import BackButton from "../common/BackButton";
+import * as productService from "../../services/productService";
 import CategoryList from "./CategoryList";
-import Pagination from "./common/Pagination";
-import Spinner from "./common/Spinner";
-import ProductCard from "./product/ProductCard";
+import Pagination from "../common/Pagination";
+import Spinner from "../common/Spinner";
+import ProductCard from "../product/ProductCard";
 import { Link } from "react-router-dom";
 
 const CategoryPage = (props) => {
@@ -66,21 +66,21 @@ const CategoryPage = (props) => {
   return (
     <div className="container">
       <BackButton goBack={() => props.history.goBack()} />
-      <div className="col-md-3">
+      {/* <div className="col-md-3">
         <CategoryList />
       </div>
-      <div className="col-md-9">
-        {loading ? <Spinner /> : products}
-        {totalPages > 1 && (
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            loadAllProducts={loadCategoryProducts}
-            hasNext={hasNext}
-            hasPrevious={hasPrevious}
-          />
-        )}
-      </div>
+      <div className="col-md-9"> */}
+      {loading ? <Spinner /> : products}
+      {totalPages > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          loadAllProducts={loadCategoryProducts}
+          hasNext={hasNext}
+          hasPrevious={hasPrevious}
+        />
+      )}
+      {/* </div> */}
     </div>
   );
 };

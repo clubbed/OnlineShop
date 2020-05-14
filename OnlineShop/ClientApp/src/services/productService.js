@@ -59,7 +59,7 @@ const createProduct = (data) => {
   // );
   // console.log("create product form data", data);
   return axios({
-    url: "/api/product/create",
+    url: "/api/product",
     method: "POST",
     headers: {
       "Content-Type": "multipart/form-data",
@@ -71,10 +71,83 @@ const createProduct = (data) => {
   // .catch((err) => console.log("image err", err.response));
 };
 
+const updateProduct = (data) => {
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${localStorage.token}`,
+    },
+    data: data,
+  };
+
+  return axios.delete(`/api/product?id=${data.id}`, config);
+};
+
+const deleteProduct = (id) => {
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${localStorage.token}`,
+    },
+  };
+
+  return axios.delete(`/api/product?id=${id}`, config);
+};
+
+const getMeasureUnits = () => {
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${localStorage.token}`,
+    },
+  };
+
+  return axios.get("/api/measureunit", config);
+};
+
+const getVendors = () => {
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${localStorage.token}`,
+    },
+  };
+
+  return axios.get("/api/vendor", config);
+};
+
+const getCategories = () => {
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${localStorage.token}`,
+    },
+  };
+
+  return axios.get("/api/category", config);
+};
+
+const getShippingTypes = () => {
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${localStorage.token}`,
+    },
+  };
+
+  return axios.get("/api/shippingtypes", config);
+};
+
 export {
   getAllProducts,
   getProductById,
   createProduct,
+  deleteProduct,
+  updateProduct,
   getFeatured,
   getProductsByCategory,
+  getMeasureUnits,
+  getVendors,
+  getShippingTypes,
+  getCategories,
 };

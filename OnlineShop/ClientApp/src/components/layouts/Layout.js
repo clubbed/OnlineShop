@@ -1,6 +1,6 @@
 import React from "react";
 import NavMenu from "../NavMenu";
-import CategoryList from "../CategoryList";
+import CategoryList from "../category/CategoryList";
 
 const Layout = ({ children }) => {
   return (

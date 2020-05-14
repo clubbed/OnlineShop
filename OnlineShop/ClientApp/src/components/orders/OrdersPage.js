@@ -5,22 +5,36 @@ function OrdersPage() {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    getMyOrders().then((data) => {
-      setOrders({ ...orders, orders: orders.concat(data) });
-      console.log("data", data);
+    getMyOrders().then((response) => {
+      setOrders(response.data);
+      console.log("data", response.data);
     });
   }, []);
 
-  const ordersData = (
-    <div>
-      {orders.length > 0 ? <div> orders</div> : <p>There is no order atm.</p>}
-    </div>
-  );
+  const showOrders =
+    orders.length > 0
+      ? orders.map((od) => (
+          <tr key={od.id}>
+            <td>{od.id}</td>
+            <td>{od.customer}</td>
+            <td>{od.total}</td>
+          </tr>
+        ))
+      : null;
 
   return (
     <div>
-      {ordersData}
-      {orders.length}
+      <h2>Orders</h2>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Customer</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>{showOrders}</tbody>
+      </table>
     </div>
   );
 }

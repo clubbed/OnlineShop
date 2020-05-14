@@ -29,11 +29,13 @@ const ProductDetails = (props) => {
       <div className="alert alert-warning">
         Measure Unit - {product.measureUnit}, Price - {product.price}
       </div>
-      <div>
-        <button className="btn btn-primary" onClick={addToCart}>
-          Add to Cart
-        </button>
-      </div>
+      {props.isAuthenticated && (
+        <div>
+          <button className="btn btn-primary" onClick={addToCart}>
+            Add to Cart
+          </button>
+        </div>
+      )}
     </React.Fragment>
   );
 
@@ -45,4 +47,10 @@ const ProductDetails = (props) => {
   );
 };
 
-export default connect(null, { addToCart })(ProductDetails);
+function mapStateToProps(state) {
+  return {
+    isAuthenticated: state.auth.isAuthenticated,
+  };
+}
+
+export default connect(mapStateToProps, { addToCart })(ProductDetails);

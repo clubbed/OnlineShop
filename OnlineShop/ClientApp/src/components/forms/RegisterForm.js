@@ -21,6 +21,7 @@ function RegisterForm(props) {
         props.onSubmit(user);
       }}
     >
+      <label htmlFor="email">Email:</label>
       <input
         type="email"
         name="email"
@@ -28,6 +29,7 @@ function RegisterForm(props) {
         value={user.email}
         onChange={onchange}
       />
+      <label htmlFor="password">Password:</label>
       <input
         type="password"
         name="password"
@@ -35,6 +37,7 @@ function RegisterForm(props) {
         value={user.password}
         onChange={onchange}
       />
+      <label htmlFor="confirmPassword">Confirm Password:</label>
       <input
         type="password"
         name="confirmPassword"
@@ -42,9 +45,11 @@ function RegisterForm(props) {
         value={user.confirmPassword}
         onChange={onchange}
       />
-      <button type="submit" className="btn btn-primary">
-        Register
-      </button>
+      <div className="text-center mt-4">
+        <button type="submit" className="btn btn-primary">
+          Register
+        </button>
+      </div>
     </form>
   );
 }

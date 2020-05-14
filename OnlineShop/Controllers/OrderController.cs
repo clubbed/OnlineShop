@@ -36,7 +36,7 @@ namespace OnlineShop.Web.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetMySingleOrder/id")]
+        [HttpGet("GetMySingleOrder/{id}")]
         public async Task<IActionResult> GetMySingleOrder(int id)
         {
             var userId = int.Parse(_contextAccessor.HttpContext
@@ -51,7 +51,7 @@ namespace OnlineShop.Web.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = RolesDeafults.Admin)]
+        [Authorize(Roles = RolesDefaults.Admin)]
         public async Task<IActionResult> GetAllOrders()
         {
             var result = await _mediatr.Send(new GetAllOrdersQuery());
@@ -63,7 +63,7 @@ namespace OnlineShop.Web.Controllers
         }
 
         [HttpGet("id")]
-        [Authorize(Roles = RolesDeafults.Admin)]
+        [Authorize(Roles = RolesDefaults.Admin)]
         public async Task<IActionResult> GetSingleOrder(int id)
         {
             var result = await _mediatr.Send(new GetSingleOrderByIdQuery(id));
@@ -75,7 +75,7 @@ namespace OnlineShop.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateOrder(CreateOrderCommand command)
+        public async Task<IActionResult> CreateOrder([FromBody]CreateOrderCommand command)
         {
             var result = await _mediatr.Send(command);
 

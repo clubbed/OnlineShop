@@ -18,7 +18,8 @@ namespace OnlineShop.Infrastructure.Utility
 
         private static string ReadJson()
         {
-            var path = @"C:\Users\Admin\source\repos\OnlineShop\OnlineShop\dataSettings.json";
+            //var path = @"C:\Users\Admin\source\repos\OnlineShop\OnlineShop\dataSettings.json";
+            var path = @"C:\Users\interd\Source\Repos\OnlineShop\OnlineShop\appsettings.json";
             var text = File.ReadAllText(path);
 
             var result = JsonConvert.DeserializeObject<DataSettings>(text);

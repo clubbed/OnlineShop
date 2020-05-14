@@ -65,6 +65,17 @@ namespace OnlineShop.Infrastructure.Migrations
                 principalTable: "Categories",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.SetNull);
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                                { 1, "Technology" },
+                                { 2, "Fashion" },
+                                { 3, "Kids" },
+                                { 4, "Foods" }
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

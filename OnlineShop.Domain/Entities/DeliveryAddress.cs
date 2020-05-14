@@ -12,7 +12,7 @@ namespace OnlineShop.Domain.Entities
         public string State { get; set; }
         public bool Active { get; set; }
 
-        public int CustomerId { get; set; }
-        public Customer Customer { get; set; }
+        public int UserId { get; set; }
+        public User User { get; set; }
     }
 }

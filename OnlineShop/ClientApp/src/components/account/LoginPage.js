@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import LoginForm from "./forms/LoginForm";
-import { login } from "../store/Auth";
+import LoginForm from "../forms/LoginForm";
+import { login } from "../../store/Auth";
 
 class LoginPage extends Component {
   onsubmit = (data) => {

@@ -56,8 +56,8 @@ namespace OnlineShop.Web.Controllers
             return Ok(result);
         }
 
-        [HttpPost("create")]
-        [Authorize(Roles = RolesDeafults.Admin)]
+        [HttpPost()]
+        [Authorize(Roles = RolesDefaults.Admin)]
         public async Task<IActionResult> CreateProduct([FromForm]CreateProductCommand command)
         {
             try
@@ -71,6 +71,48 @@ namespace OnlineShop.Web.Controllers
                 return BadRequest(ex.Message);
             }
             
+        }
+
+        [HttpPut]
+        [Authorize(Roles = RolesDefaults.Admin)]
+        public async Task<IActionResult> UpdateProduct(int id, UpdateProductCommand command)
+        {
+            try
+            {
+                command.Id = id;
+
+                var result = await _mediatr.Send(command);
+
+                if (result is NotFoundResponse)
+                    return NotFound($"There is no product with id = {id}");
+
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        [Authorize(Roles = RolesDefaults.Admin)]
+        public async Task<IActionResult> DeleteProduct(int id)
+        {
+            try
+            {
+                var result = await _mediatr.Send(new DeleteProductCommand(id));
+
+                if (result is NotFoundResponse)
+                    return NotFound($"There is no product with id = {id}");
+
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

@@ -6,23 +6,23 @@ const AdminNavBar = () => {
     <nav aria-label="breadcrumb">
       <ol className="breadcrumb">
         <Link to="/admin/products" className="breadcrumb-item">
-          <a href="#">Products</a>
+          Products
         </Link>
         <Link to="/admin/vendors" className="breadcrumb-item">
-          <a href="#">Library</a>
+          Vendors
         </Link>
         <Link to="/admin/measureunits" className="breadcrumb-item">
-          <a href="#">Measure Units</a>
+          Measure Units
         </Link>
         <Link to="/admin/shipment" className="breadcrumb-item">
-          <a href="#">Shipment</a>
+          Shipment
         </Link>
-        <Link to="/admin/vendors" className="breadcrumb-item">
-          <a href="#">Library</a>
+        <Link to="/admin/orders" className="breadcrumb-item">
+          Orders
         </Link>
-        <li className="breadcrumb-item active" aria-current="page">
-          Data
-        </li>
+        <Link to="/" className="breadcrumb-item">
+          Home
+        </Link>
       </ol>
     </nav>
   );

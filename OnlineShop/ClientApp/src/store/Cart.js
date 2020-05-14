@@ -1,5 +1,6 @@
 const ADD_TO_CART = "ADD_TO_CART";
 const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+const EMPTY_CART = " EMPTY_CART";
 
 export const addToCart = (data) => {
   return { type: ADD_TO_CART, payload: data };
@@ -10,6 +11,17 @@ export const removeFromCart = (id) => {
     type: REMOVE_FROM_CART,
     id,
   };
+};
+
+export const emptyItems = () => {
+  return {
+    type: EMPTY_CART,
+  };
+};
+
+export const emptyCart = () => (dispatch) => {
+  console.log("empty card");
+  dispatch(emptyItems());
 };
 
 const initialState = {
@@ -48,6 +60,8 @@ export const reducer = (state = initialState, action) => {
         items: filteredItems,
         total: state.total - itemRemoved.price * itemRemoved.qty,
       };
+    case EMPTY_CART:
+      return { items: [], total: 0 };
     default:
       return state;
   }

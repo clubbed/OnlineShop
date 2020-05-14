@@ -32,8 +32,7 @@ namespace OnlineShop.Application.Repositories.Order
             var orders = _dbContext.Orders
                 .Include(c => c.OrderDetails)
                     .ThenInclude(c => c.Product)
-                .Include(c => c.Customer)
-                    .ThenInclude(c => c.User)
+                .Include(c => c.User)
                     .AsQueryable();
 
             return orders;
@@ -50,12 +49,11 @@ namespace OnlineShop.Application.Repositories.Order
                 var orders = await _dbContext.Orders
                 .Include(c => c.OrderDetails)
                     .ThenInclude(c => c.Product)
-                .Include(c => c.Customer)
-                    .ThenInclude(c => c.User)
+                .Include(c => c.User)
                 .Select(c => new OrderVm
                 {
                     Id = c.Id,
-                    Customer = c.Customer.User.UserName,
+                    Customer = c.User.UserName,
                     Total = c.Total,
                     OrderDetails = c.OrderDetails.Select(x => new OrderDetailsVm
                     {
@@ -81,45 +79,53 @@ namespace OnlineShop.Application.Repositories.Order
 
         public async Task<List<OrderVm>> GetAllByUserAsync(int userId)
         {
-            if(await _cacheService.KeyExistsAsync(string.Format(RedisDefaultKeys.GetAllOrdersByUser,userId)))
+            try
             {
-                return await _cacheService
-                    .GetValueAsync<List<OrderVm>>(string.Format(RedisDefaultKeys.GetAllOrdersByUser, userId));
-            }
-            else
-            {
-                var orders = await _dbContext.Orders
-               .Include(c => c.OrderDetails)
-                   .ThenInclude(c => c.Product)
-               .Include(c => c.Customer)
-                   .ThenInclude(c => c.User)
-               .Where(c => c.CustomerId == userId)
-               .Select(c => new OrderVm
-               {
-                   Id = c.Id,
-                   Customer = c.Customer.User.UserName,
-                   Total = c.Total,
-                   OrderDetails = c.OrderDetails.Select(x => new OrderDetailsVm
-                   {
-                       ProductId = x.ProductId,
-                       Discount = x.Discount,
-                       Price = x.Price,
-                       ProductName = x.Product.Name,
-                       Qty = x.Qty,
-                       TaxId = x.TaxId
-                   }).ToList()
-               })
-               .ToListAsync();
-
-                if(orders != null)
+                if (await _cacheService.KeyExistsAsync(string.Format(RedisDefaultKeys.GetAllOrdersByUser, userId)))
                 {
-                    await _cacheService
-                        .SetValueAsync<List<OrderVm>>
-                        (string.Format(RedisDefaultKeys.GetAllOrdersByUser, userId), orders);
+                    return await _cacheService
+                        .GetValueAsync<List<OrderVm>>(string.Format(RedisDefaultKeys.GetAllOrdersByUser, userId));
                 }
+                else
+                {
+                    var orders = await _dbContext.Orders
+                   .Include(c => c.OrderDetails)
+                       .ThenInclude(c => c.Product)
+                   .Include(c => c.User)
+                   .Where(c => c.UserId == userId)
+                   .Select(c => new OrderVm
+                   {
+                       Id = c.Id,
+                       Customer = c.User.UserName,
+                       Total = c.Total,
+                       OrderDetails = c.OrderDetails.Select(x => new OrderDetailsVm
+                       {
+                           ProductId = x.ProductId,
+                           Discount = x.Discount,
+                           Price = x.Price,
+                           ProductName = x.Product.Name,
+                           Qty = x.Qty,
+                           TaxId = x.TaxId
+                       }).ToList()
+                   })
+                   .ToListAsync();
 
-                return orders;
-            }            
+                    if (orders != null)
+                    {
+                        await _cacheService
+                            .SetValueAsync<List<OrderVm>>
+                            (string.Format(RedisDefaultKeys.GetAllOrdersByUser, userId), orders);
+                    }
+
+                    return orders;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+                      
         }
 
         public async Task<OrderVm> GetSingleAsync(int id)
@@ -134,13 +140,12 @@ namespace OnlineShop.Application.Repositories.Order
             var order = await _dbContext.Orders
                 .Include(c => c.OrderDetails)
                     .ThenInclude(c => c.Product)
-                .Include(c => c.Customer)
-                    .ThenInclude(c => c.User)
-                .Where(c => c.CustomerId == userId && c.Id == id)
+                .Include(c => c.User)
+                .Where(c => c.UserId == userId && c.Id == id)
                 .Select(c => new OrderVm
                 {
                     Id = c.Id,
-                    Customer = c.Customer.User.UserName,
+                    Customer = c.User.UserName,
                     Total = c.Total,
                     OrderDetails = c.OrderDetails.Select(x => new OrderDetailsVm
                     {
@@ -183,7 +188,7 @@ namespace OnlineShop.Application.Repositories.Order
             {
                 var order = new OnlineShop.Domain.Entities.Order
                 {
-                    CustomerId = command.UserId,
+                    UserId = command.UserId,
                     Total = command.Total,
                     InvoiceDate = command.InvoiceDate,
                 };
@@ -200,6 +205,9 @@ namespace OnlineShop.Application.Repositories.Order
                 order.OrderDetails = orderDetails;
 
                 await _dbContext.Orders.AddAsync(order);
+                
+                await _cacheService.DeleteKeyAsync(string.Format(RedisDefaultKeys.GetAllOrdersByUser, command.UserId));
+                await _cacheService.DeleteKeyAsync(RedisDefaultKeys.GetAllOrders);
 
                 return await _dbContext.SaveChangesAsync() > 0;
             }

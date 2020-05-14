@@ -14,9 +14,9 @@ namespace OnlineShop.Infrastructure.Configuration
             builder.HasKey(c => c.Id);
             builder.Property(c => c.Total).HasColumnType("money").IsRequired();
 
-            builder.HasOne(o => o.Customer)
+            builder.HasOne(o => o.User)
                 .WithMany(c => c.Orders)
-                .HasForeignKey(o => o.CustomerId)
+                .HasForeignKey(o => o.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

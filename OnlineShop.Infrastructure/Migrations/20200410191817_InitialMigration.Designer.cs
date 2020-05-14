@@ -33,7 +33,7 @@ namespace OnlineShop.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Customers");
+                    b.ToTable("AspNetUsers");
                 });
 
             modelBuilder.Entity("OnlineShop.Domain.Entities.DeliveryAddress", b =>
@@ -50,14 +50,14 @@ namespace OnlineShop.Infrastructure.Migrations
                     b.Property<string>("City")
                         .IsRequired();
 
-                    b.Property<int>("CustomerId");
+                    b.Property<int>("UserId");
 
                     b.Property<string>("State")
                         .IsRequired();
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("DeliveryAddresses");
                 });
@@ -117,7 +117,7 @@ namespace OnlineShop.Infrastructure.Migrations
 
                     b.Property<int>("CreatedBy");
 
-                    b.Property<int>("CustomerId");
+                    b.Property<int>("UserId");
 
                     b.Property<DateTime>("InvoiceDate");
 
@@ -130,7 +130,7 @@ namespace OnlineShop.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -501,7 +501,7 @@ namespace OnlineShop.Infrastructure.Migrations
                 {
                     b.HasOne("OnlineShop.Domain.Entities.Customer", "Customer")
                         .WithMany("DeliveryAddresses")
-                        .HasForeignKey("CustomerId");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("OnlineShop.Domain.Entities.Employee", b =>
@@ -516,7 +516,7 @@ namespace OnlineShop.Infrastructure.Migrations
                 {
                     b.HasOne("OnlineShop.Domain.Entities.Customer", "Customer")
                         .WithMany("Orders")
-                        .HasForeignKey("CustomerId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

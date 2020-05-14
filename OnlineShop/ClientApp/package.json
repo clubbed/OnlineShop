@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.9.13",
     "axios": "^0.19.2",
     "bootstrap": "^3.3.7",
     "jwt-decode": "^2.2.0",
@@ -28,5 +29,5 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "proxy": "https://localhost:44335"
+  "proxy": "https://localhost:44353"
 }

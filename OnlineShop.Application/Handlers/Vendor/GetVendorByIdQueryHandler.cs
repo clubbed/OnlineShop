@@ -4,8 +4,6 @@ using OnlineShop.Application.Interfaces;
 using OnlineShop.Application.Queries.Vendor;
 using OnlineShop.Application.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -31,6 +29,7 @@ namespace OnlineShop.Application.Handlers.Vendor
 
             return new VendorVM
             {
+                Id = vendor.Id,
                 FirstName = vendor.FirstName,
                 LastName = vendor.LastName,
                 Address = vendor.Address,

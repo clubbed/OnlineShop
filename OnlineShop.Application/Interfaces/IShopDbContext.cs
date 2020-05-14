@@ -12,7 +12,7 @@ namespace OnlineShop.Application.Interfaces
         DbSet<Product> Products { get; set; }
         DbSet<Tax> Taxes { get; set; }
         DbSet<MeasureUnit> MeasureUnits { get; set; }
-        DbSet<Customer> Customers { get; set; }
+        //DbSet<Customer> Customers { get; set; }
         DbSet<Vendor> Vendors { get; set; }
         DbSet<Shipper> Shippers { get; set; }
         DbSet<ShippingType> ShippingTypes { get; set; }
