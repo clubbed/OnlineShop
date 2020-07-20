@@ -7,7 +7,7 @@
     "axios": "^0.19.2",
     "bootstrap": "^3.3.7",
     "jwt-decode": "^2.2.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "prop-types": "^15.7.2",
     "prop-types-extra": "^1.1.1",
     "react": "16.13.1",
